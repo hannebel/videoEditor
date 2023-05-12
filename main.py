@@ -2,9 +2,11 @@ import tkinter as tk
 import datetime
 from tkinter import filedialog
 from moviepy.editor import *
+from PIL import ImageTk, Image
 import os
 
 def browse_video():
+    # Function to browse and select a video file
     global video_file
     video_file = filedialog.askopenfilename(title="Select a video file")
     if video_file:
@@ -12,10 +14,35 @@ def browse_video():
         original_size_label.config(text=f"Original size: {video.size[0]}x{video.size[1]}")
         original_duration_label.config(text=f"Duration: {video.duration:.2f} seconds")
         video.close()
-        
+
+def show_frame():
+    # Function to show a specific frame of the video
+    if not video_file:
+        return
+
+    frame_time = float(frame_time_var.get())
+    video = VideoFileClip(video_file)
+    frame = video.get_frame(frame_time)
+
+    # Convert the frame to an image
+    image = Image.fromarray(frame)
+
+    # Resize the image to fit within the window
+    width, height = image.size
+    max_width = 300
+    max_height = 200
+    if width > max_width or height > max_height:
+        image.thumbnail((max_width, max_height), Image.ANTIALIAS)
+    
+    # Display the image
+    frame_image = ImageTk.PhotoImage(image)
+    frame_image_label.configure(image=frame_image)
+    frame_image_label.image = frame_image
+
+    video.close()
 
 def convert_video():
-    
+    # Function to convert and save the video with selected settings
     output_extension = ".mp4" if format_var.get() == "mp4" else ".avi"
     output_file = filedialog.asksaveasfilename(defaultextension=output_extension, title="Save as")
 
@@ -133,12 +160,12 @@ time_window_var = tk.StringVar()
 time_window_entry = tk.Entry(root, textvariable=time_window_var)
 time_window_entry.pack()
 
-#Remove audio
+# Remove audio
 remove_audio_var = tk.BooleanVar()
 remove_audio_checkbox = tk.Checkbutton(root, text="Remove Audio", variable=remove_audio_var)
 remove_audio_checkbox.pack()
 
-#Select format
+# Select format
 format_var = tk.StringVar(value="mp4")
 format_label = tk.Label(root, text="Output Format:")
 format_label.pack()
@@ -152,9 +179,10 @@ mp4_radio.pack(side=tk.LEFT)
 avi_radio = tk.Radiobutton(format_frame, text="AVI", variable=format_var, value="avi")
 avi_radio.pack(side=tk.LEFT)
 
-#Convert
+# Convert
 convert_button = tk.Button(root, text="Convert Video", command=convert_video)
 convert_button.pack()
 
 
 root.mainloop()
+
