@@ -27,12 +27,12 @@ def show_frame():
     # Convert the frame to an image
     image = Image.fromarray(frame)
 
-    # Resize the image to fit within the window
-    width, height = image.size
-    max_width = 300
-    max_height = 200
-    if width > max_width or height > max_height:
-        image.thumbnail((max_width, max_height), Image.ANTIALIAS)
+    # # Resize the image to fit within the window
+    # width, height = image.size
+    # max_width = 300
+    # max_height = 200
+    # if width > max_width or height > max_height:
+    #     image.thumbnail((max_width, max_height), Image.ANTIALIAS)
     
     # Display the image
     frame_image = ImageTk.PhotoImage(image)
