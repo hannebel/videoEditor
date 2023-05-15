@@ -1,6 +1,7 @@
 # videoEditor
-
-Melanie Hannebelle - 2023/05/15
+# Melanie Hannebelle - 2023/05/15
+# For converting a video into avi or mp4, controlling scaling factor, crop factor, fps, speed, compression
+# a generated txt file with metadata keeps track of the conversion parameters. 
 
 Make sure to run these commands in the terminal (Ubuntu, macOS) or Anaconda Prompt (Windows) as an administrator or user with the necessary privileges.
 
