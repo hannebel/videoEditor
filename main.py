@@ -13,6 +13,7 @@ def browse_video():
         video = VideoFileClip(video_file)
         original_size_label.config(text=f"Original size: {video.size[0]}x{video.size[1]}")
         original_duration_label.config(text=f"Duration: {video.duration:.2f} seconds")
+        original_fps_label.config(text=f"Original FPS: {video.fps}")  
         video.close()
 
 def show_frame():
@@ -80,10 +81,9 @@ def convert_video():
     properties_file = output_file.replace(output_extension, '.txt')
     with open(properties_file, 'w') as f:
         f.write(f"Original video: {video_file}\n")
-        f.write(f"Date of generation: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-        f.write(f"Scale: {scale_var.get()}\n")
-        f.write(f"Frame rate: {fps_var.get()}\n")
-        f.write(f"Speed: {speed_var.get()}\n")
+        f.write(f"Time of generation: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        f.write(f"Original FPS: {video.fps}\n")  
+        f.write(f"New FPS: {fps_var.get()}\n")
         f.write(f"Compression: {compression_var.get()} kbps\n")
         if crop_area_var.get():
             f.write(f"Crop area: {crop_area_var.get()}\n")
@@ -111,6 +111,9 @@ original_size_label.pack()
 
 original_duration_label = tk.Label(root, text="Duration: ")
 original_duration_label.pack()
+
+original_fps_label = tk.Label(root, text="Original FPS: ")
+original_fps_label.pack()
 
 scale_label = tk.Label(root, text="Scale (e.g., 0.5 for half-size, 2 for double-size):")
 scale_label.pack()
